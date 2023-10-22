@@ -1,10 +1,10 @@
 import React from "react"
-import SignInForm from "@/components/auth/SignInForm"
+import SignUpForm from "@/components/auth/SignUpForm";
 import { redirect } from "next/navigation";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Nav from "@/components/Nav";
-import SignUpButton from "@/components/auth/SignUpButton";
+import SignInButton from "@/components/auth/SignInButton";
 
 
 export default async function SignIn() {
@@ -18,10 +18,10 @@ export default async function SignIn() {
     return (
         <>
             <Nav>
-                <SignUpButton />
+                <SignInButton />
             </Nav>
             <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
-                <SignInForm />
+                <SignUpForm />
             </div>
         </>
     )

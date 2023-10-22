@@ -24,47 +24,52 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Link from "next/link";
+import { useToast } from "../ui/use-toast";
 
 
 const formSchema = z.object({
     email: z.string().email(),
-    password: z.string().min(8),
 });
 
 
 
-export default function SignInForm() {
+export default function ResetPasswordForm() {
     const supabase = createClientComponentClient();
+    const { toast } = useToast();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             email: "",
-            password: "",
         },
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        const { error } = await supabase.auth.signInWithPassword({
-            email: values.email,
-            password: values.password,
+        const { error } = await supabase.auth.resetPasswordForEmail(
+            values.email, {
+            redirectTo: `${window.location.origin}/auth/update-password`,
         });
 
         if (error) {
             console.error(error.message);
+        }
+        else {
+            toast({
+                title: "Password reset email sent",
+                description: "Check your email for a link to reset your password"
+            })
         }
     }
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Sign In</CardTitle>
-                <CardDescription>Sign in to your account</CardDescription>
+                <CardTitle>Reset Password</CardTitle>
+                <CardDescription>Enter your email to receive a reset password link</CardDescription>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
-                    <form id="sign-in-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <form id="reset-password-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField
                             control={form.control}
                             name="email"
@@ -78,29 +83,13 @@ export default function SignInForm() {
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Password</FormLabel>
-                                    <FormControl>
-                                        <Input type="password" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
                     </form>
                 </Form>
             </CardContent>
-            <CardFooter className="flex-col items-start gap-2">
-                <Button form="sign-in-form" type="submit" onClick={form.handleSubmit(onSubmit)}>
+            <CardFooter>
+                <Button form="reset-password-form" type="submit" onClick={form.handleSubmit(onSubmit)}>
                     Submit
                 </Button>
-                <Link className="text-sm" href="/auth/reset-password">
-                    Forgot password?
-                </Link>
             </CardFooter>
         </Card >
     )

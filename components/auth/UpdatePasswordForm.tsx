@@ -24,60 +24,54 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useToast } from "../ui/use-toast";
 
 
 const formSchema = z.object({
-    email: z.string().email(),
     password: z.string().min(8),
 });
 
 
-
-export default function SignInForm() {
+export default function UpdatePasswordForm() {
     const supabase = createClientComponentClient();
+    const router = useRouter();
+    const { toast } = useToast();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: "",
             password: "",
         },
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        const { error } = await supabase.auth.signInWithPassword({
-            email: values.email,
+        const { error } = await supabase.auth.updateUser({
             password: values.password,
         });
 
         if (error) {
             console.error(error.message);
         }
+        else {
+            console.log("Successfully updated password");
+            toast({
+                title: "Updated password!",
+                description: "You can now sign in with your new password."
+            });
+            router.push('/');
+        }
     }
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Sign In</CardTitle>
-                <CardDescription>Sign in to your account</CardDescription>
+                <CardTitle>Update Password</CardTitle>
+                <CardDescription>Create a new password for your account</CardDescription>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
-                    <form id="sign-in-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Email</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="name@example.com" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                    <form id="update-password-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField
                             control={form.control}
                             name="password"
@@ -94,14 +88,11 @@ export default function SignInForm() {
                     </form>
                 </Form>
             </CardContent>
-            <CardFooter className="flex-col items-start gap-2">
-                <Button form="sign-in-form" type="submit" onClick={form.handleSubmit(onSubmit)}>
+            <CardFooter>
+                <Button form="update-password-form" type="submit" onClick={form.handleSubmit(onSubmit)}>
                     Submit
                 </Button>
-                <Link className="text-sm" href="/auth/reset-password">
-                    Forgot password?
-                </Link>
             </CardFooter>
-        </Card >
+        </Card>
     )
 }

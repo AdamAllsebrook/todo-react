@@ -1,15 +1,15 @@
 import React from 'react';
-import AuthLink from './AuthLink';
 import { CheckSquare } from 'lucide-react';
+import Link from 'next/link';
 
-export default async function Nav() {
+export default async function Nav({ children }: { children?: React.ReactNode }) {
     return (
         <nav className="flex w-full justify-between border-b p-2">
             <div className="my-auto flex">
                 <CheckSquare className="w-6 h-6 mr-2 my-auto" />
-                <h1 className="text-2xl">Todos!</h1>
+                <Link href="/" className="text-2xl">Todos!</Link>
             </div>
-            <AuthLink />
+            {children}
         </nav>
     )
 }

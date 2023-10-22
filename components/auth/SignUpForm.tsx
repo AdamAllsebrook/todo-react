@@ -24,6 +24,13 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { AlertCircle } from "lucide-react"
+import {
+    Alert,
+    AlertDescription,
+    AlertTitle,
+} from "@/components/ui/alert"
+import { useToast } from "@/components/ui/use-toast";
 import Link from "next/link";
 
 
@@ -33,9 +40,23 @@ const formSchema = z.object({
 });
 
 
+function ErrorAlert({ error }: { error: string }) {
+    return (
+        <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
+            <AlertDescription>
+                {error}
+            </AlertDescription>
+        </Alert>
+    )
+}
 
-export default function SignInForm() {
+export default function SignUpForm() {
     const supabase = createClientComponentClient();
+
+    const { toast } = useToast();
+    const [alert, setAlert] = useState<React.ReactNode>(null)
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -46,25 +67,37 @@ export default function SignInForm() {
     })
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        const { error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabase.auth.signUp({
             email: values.email,
             password: values.password,
         });
 
         if (error) {
-            console.error(error.message);
+            setAlert(<ErrorAlert error={error.message} />)
         }
+        else {
+            toast({
+                title: "Sign up successful!",
+                description: "Check your email for a link to verify your account."
+            })
+        }
+    }
+
+    function handleSubmit() {
+        setAlert(null)
+        form.handleSubmit(onSubmit)
     }
 
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Sign In</CardTitle>
-                <CardDescription>Sign in to your account</CardDescription>
+                <CardTitle>Sign Up</CardTitle>
+                <CardDescription>Create an account</CardDescription>
             </CardHeader>
             <CardContent>
                 <Form {...form}>
-                    <form id="sign-in-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                    <form id="sign-up-form" onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        {alert}
                         <FormField
                             control={form.control}
                             name="email"
@@ -87,6 +120,9 @@ export default function SignInForm() {
                                     <FormControl>
                                         <Input type="password" {...field} />
                                     </FormControl>
+                                    <FormDescription>
+                                        Your password must be at least 8 characters long.
+                                    </FormDescription>
                                     <FormMessage />
                                 </FormItem>
                             )}
@@ -95,12 +131,9 @@ export default function SignInForm() {
                 </Form>
             </CardContent>
             <CardFooter className="flex-col items-start gap-2">
-                <Button form="sign-in-form" type="submit" onClick={form.handleSubmit(onSubmit)}>
+                <Button form="sign-up-form" type="submit" onClick={handleSubmit}>
                     Submit
                 </Button>
-                <Link className="text-sm" href="/auth/reset-password">
-                    Forgot password?
-                </Link>
             </CardFooter>
         </Card >
     )

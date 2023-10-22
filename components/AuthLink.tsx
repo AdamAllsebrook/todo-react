@@ -1,8 +1,8 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import Link from 'next/link';
 import { cookies } from 'next/headers';
 import UserDropdown from './UserDropdown';
-import { buttonVariants } from './ui/button';
+import SignInButton from './auth/SignInButton';
+import SignUpButton from './auth/SignUpButton';
 
 export default async function AuthLink() {
     const supabase = createServerComponentClient({ cookies });
@@ -11,10 +11,15 @@ export default async function AuthLink() {
 
     if (user !== null) {
         return (
-            <UserDropdown name={user.email ?? user.phone ?? "User"} />
+            <UserDropdown user={user} />
         );
     }
     else {
-        return <Link className={buttonVariants({ variant: "default" })} href="/auth/sign-in">Sign In</Link>;
+        return (
+            <div className="flex space-x-2">
+                <SignInButton />
+                <SignUpButton />
+            </div>
+        )
     }
 }

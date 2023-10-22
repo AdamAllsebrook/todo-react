@@ -15,18 +15,19 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Button } from "@/components/ui/button"
-import { ArrowDown, ChevronDown, LogOut, User } from "lucide-react"
+import { Button, buttonVariants } from "@/components/ui/button"
+import { ArrowDown, ChevronDown, LogOut, RotateCcw, User } from "lucide-react"
+import Link from "next/link"
 
 
-export default function UserDropdown({ name }: { name: string }) {
+export default function UserDropdown({ user }: { user: any }) {
 
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="outline">
                     <User className="w-4 h-4 mr-2" />
-                    {name}
+                    {user.email}
                     <ChevronDown className="w-4 h-4 ml-2" />
                 </Button>
             </DropdownMenuTrigger>
@@ -36,6 +37,14 @@ export default function UserDropdown({ name }: { name: string }) {
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
+                    <DropdownMenuItem className="p-0">
+                        <Button asChild variant="ghost" className="px-2 py-1.5 w-full">
+                            <Link href="/auth/update-password">
+                                <RotateCcw className="w-4 h-4 mr-2" />
+                                Update Password
+                            </Link>
+                        </Button>
+                    </DropdownMenuItem>
                     <DropdownMenuItem className="p-0">
                         <form method="POST" action="/auth/sign-out" className="w-full">
                             <Button type="submit" variant="ghost" className="px-2 py-1.5 w-full justify-start">

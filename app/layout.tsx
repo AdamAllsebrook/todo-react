@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 import AuthProvider from '@/components/AuthProvider'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 import { cookies } from 'next/headers'
+import { Toaster } from "@/components/ui/toaster"
 
 const fontSans = FontSans({ subsets: ['latin'], variable: "--font-sans" })
 
@@ -28,6 +29,7 @@ export default async function RootLayout({ children, }: { children: React.ReactN
                 <AuthProvider accessToken={accessToken}>
                     {children}
                 </AuthProvider>
+                <Toaster />
             </body>
         </html>
     )
