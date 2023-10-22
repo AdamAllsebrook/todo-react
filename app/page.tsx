@@ -3,7 +3,7 @@ import Nav from '@/components/Nav'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import Todos from '@/components/Todos';
+import TodosApp from '@/components/TodosApp';
 
 export default async function Home() {
     const supabase = createServerComponentClient({ cookies });
@@ -19,7 +19,7 @@ export default async function Home() {
             <Nav>
                 <AuthLink />
             </Nav>
-            <Todos />
+            <TodosApp />
         </main>
     )
 }
