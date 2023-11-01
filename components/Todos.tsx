@@ -5,6 +5,7 @@ import React from "react"
 import { Database } from "@/types/supabase"
 import Todo from "./Todo"
 import { useQuery } from "@tanstack/react-query"
+import AddTodo from "./AddTodo"
 
 
 export default function Todos() {
@@ -34,6 +35,7 @@ export default function Todos() {
                 {!todos ? null : todos.map((todo) => (
                     <Todo key={todo.id} todo={todo} />
                 ))}
+                <AddTodo />
             </ul>
         </div>
     )

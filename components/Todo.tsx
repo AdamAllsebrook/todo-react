@@ -5,6 +5,8 @@ import { Database } from "@/types/supabase"
 import { Checkbox } from "./ui/checkbox"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { Button } from "./ui/button"
+import EditableText from "./EditableText"
 
 export default function Todo({ todo }: { todo: Database['public']['Tables']['todos']['Row'] }) {
     const supabase = createClientComponentClient<Database>()
@@ -31,11 +33,21 @@ export default function Todo({ todo }: { todo: Database['public']['Tables']['tod
     })
 
     return (
-        <div className="flex px-2" >
-            <Checkbox id={`check-${todo.id}`} onClick={() => {
+        <div className="flex">
+            <Button variant="ghost" size="sm" onClick={() => {
                 mutate({ completed: !todo.completed })
-            }} checked={isPending ? variables.completed : todo.completed} className="my-auto mr-2" />
-            <label htmlFor={`check-${todo.id}`} className="my-auto">{todo.title}</label>
+            }} >
+                <Checkbox id={`check-${todo.id}`} checked={isPending ? variables.completed : todo.completed} />
+                <label htmlFor={`check-${todo.id}`} className="hidden">{todo.title}</label>
+            </Button>
+            <div className="flex flex-col items-start">
+                <EditableText text={todo.title} />
+                <Button variant="ghost" size="sm" onClick={() => { }} >
+                    <span className="text-sm text-gray-500">
+                        {todo.description}
+                    </span>
+                </Button>
+            </div>
         </div>
     )
 }

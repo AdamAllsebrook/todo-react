@@ -38,7 +38,7 @@ export default function UserDropdown({ user }: { user: any }) {
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                     <DropdownMenuItem className="p-0">
-                        <Button asChild variant="ghost" className="px-2 py-1.5 w-full">
+                        <Button asChild variant="ghost" size="sm" className="w-full">
                             <Link href="/auth/update-password">
                                 <RotateCcw className="w-4 h-4 mr-2" />
                                 Update Password
@@ -47,7 +47,7 @@ export default function UserDropdown({ user }: { user: any }) {
                     </DropdownMenuItem>
                     <DropdownMenuItem className="p-0">
                         <form method="POST" action="/auth/sign-out" className="w-full">
-                            <Button type="submit" variant="ghost" className="px-2 py-1.5 w-full justify-start">
+                            <Button type="submit" variant="ghost" size="sm" className="w-full justify-start">
                                 <LogOut className="w-4 h-4 mr-2" />
                                 Sign Out
                             </Button>
