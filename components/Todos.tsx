@@ -6,6 +6,7 @@ import { Database } from "@/types/supabase"
 import Todo from "./Todo"
 import { useQuery } from "@tanstack/react-query"
 import AddTodo from "./AddTodo"
+import EditableTodo from "./EditableTodo"
 
 
 export default function Todos() {
@@ -33,7 +34,7 @@ export default function Todos() {
             <h1 className="text-3xl font-semibold mb-4">My to-do list</h1>
             <ul className="space-y-4">
                 {!todos ? null : todos.map((todo) => (
-                    <Todo key={todo.id} todo={todo} />
+                    <EditableTodo key={todo.id} todo={todo} />
                 ))}
                 <AddTodo />
             </ul>
