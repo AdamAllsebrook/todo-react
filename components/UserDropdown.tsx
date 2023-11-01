@@ -7,16 +7,11 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Button, buttonVariants } from "@/components/ui/button"
-import { ArrowDown, ChevronDown, LogOut, RotateCcw, User } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { ChevronDown, LogOut, RotateCcw, User } from "lucide-react"
 import Link from "next/link"
 
 
@@ -27,7 +22,7 @@ export default function UserDropdown({ user }: { user: any }) {
             <DropdownMenuTrigger asChild>
                 <Button variant="outline">
                     <User className="w-4 h-4 mr-2" />
-                    {user.email}
+                    <p className="hidden md:block">{user.email}</p>
                     <ChevronDown className="w-4 h-4 ml-2" />
                 </Button>
             </DropdownMenuTrigger>

@@ -2,14 +2,8 @@
 
 import React, { useEffect, useState } from "react"
 import { Database } from "@/types/supabase"
-import { Checkbox } from "./ui/checkbox"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import EditableText from "./EditableText"
-import {
-    Card,
-} from "@/components/ui/card"
-import { cn } from "@/lib/utils"
 import Todo from "./Todo"
 
 export default function EditableTodo({ todo }: { todo: Database['public']['Tables']['todos']['Row'] }) {
@@ -59,23 +53,4 @@ export default function EditableTodo({ todo }: { todo: Database['public']['Table
             }}
         />
     )
-    //     < Card className = "w-[350px] flex p-4" >
-    //     <Checkbox id={`check-${todo.id}`} className="my-2 mr-2"
-    //     checked={showCompleted} onClick={() => {
-    //         mutate({ completed: !todo.completed })
-    //     }} />
-    // <label htmlFor={`check-${todo.id}`} className="hidden">{todo.title}</label>
-    //     <div className="flex flex-col items-start w-full">
-    //     <EditableText text={todo.title}
-    // textClass={cn("text-lg break-all whitespace-normal text-left", showCompleted && "line-through text-gray-500")}
-    // onSubmit={text => {
-    //     mutate({ title: text })
-    // }} />
-    // <EditableText text={todo.description ?? ""}
-    // textClass={cn("text-md text-gray-500 break-all whitespace-normal text-left", showCompleted && "line-through")}
-    // onSubmit={text => {
-    //     mutate({ description: text })
-    // }} />
-    // </div>
-    //     </Card >
 }

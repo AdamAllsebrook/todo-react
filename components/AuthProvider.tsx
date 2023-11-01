@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 
 export const AuthContext = createContext<Session | null>(null);
 
-const AuthProvider = ({ accessToken, children }) => {
+const AuthProvider = ({ accessToken, children }: { accessToken: any, children: any }) => {
     const supabase = createClientComponentClient();
     const router = useRouter();
     const [session, setSession] = useState<Session | null>(null);

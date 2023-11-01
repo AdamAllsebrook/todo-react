@@ -20,7 +20,7 @@ export default function Todo(
         { todo: Todo, autofocusTitle?: boolean, onCheck: () => void, onTitle: (text: string) => void, onTitleBlur?: () => void, onDescription: (text: string) => void }) {
 
     return (
-        <Card className="w-[350px] flex p-4">
+        <Card className="w-full max-w-3xl flex p-4">
             <Checkbox id={`check-${todo.id}`} className="my-2 mr-2"
                 checked={todo.completed} onClick={onCheck} />
             <label htmlFor={`check-${todo.id}`} className="hidden">{todo.title}</label>

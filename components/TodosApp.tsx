@@ -12,7 +12,9 @@ const queryClient = new QueryClient()
 export default function TodosApp() {
     return (
         <QueryClientProvider client={queryClient}>
-            <Todos />
+            <div className="mx-auto mb-8">
+                <Todos />
+            </div>
         </QueryClientProvider>
     )
 }

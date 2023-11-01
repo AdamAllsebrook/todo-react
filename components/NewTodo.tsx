@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext } from "react"
 import { Database } from "@/types/supabase"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -56,23 +56,4 @@ export default function NewTodo({ callback }: { callback: () => void }) {
             }}
         />
     )
-    //     < Card className = "w-[350px] flex p-4" >
-    //     <Checkbox id={`check-${todo.id}`} className="my-2 mr-2"
-    //     checked={showCompleted} onClick={() => {
-    //         mutate({ completed: !todo.completed })
-    //     }} />
-    // <label htmlFor={`check-${todo.id}`} className="hidden">{todo.title}</label>
-    //     <div className="flex flex-col items-start w-full">
-    //     <EditableText text={todo.title}
-    // textClass={cn("text-lg break-all whitespace-normal text-left", showCompleted && "line-through text-gray-500")}
-    // onSubmit={text => {
-    //     mutate({ title: text })
-    // }} />
-    // <EditableText text={todo.description ?? ""}
-    // textClass={cn("text-md text-gray-500 break-all whitespace-normal text-left", showCompleted && "line-through")}
-    // onSubmit={text => {
-    //     mutate({ description: text })
-    // }} />
-    // </div>
-    //     </Card >
 }
