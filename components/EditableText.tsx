@@ -21,28 +21,31 @@ export default function EditableText(
                 onSubmit(value)
             }}
             >
-
-                <Button variant="ghost" size="sm" className="focus-within:bg-gray-100 h-auto min-h-9 w-full">
-                    <input type="text" ref={inputRef} className={cn("bg-transparent border-none focus:outline-none w-full", textClass)}
-                        defaultValue={value} placeholder={placeholder} autoFocus={true} onBlur={() => {
-                            if (onBlur) onBlur()
-                            else setIsEditing(false)
-                        }} onChange={(e) => setValue(e.target.value)}
-                        onKeyUp={(e) => {
-                            if (e.key === 'Escape') inputRef.current?.blur()
-                        }} />
+                <Button variant="ghost" size="sm" className="focus-within:bg-gray-100 h-auto min-h-9 w-full justify-start">
+                    <p className={cn("w-full", textClass)}>
+                        <input type="text" ref={inputRef} className={cn("bg-transparent border-none focus:outline-none w-full")}
+                            defaultValue={value} placeholder={placeholder} autoFocus={true} onBlur={() => {
+                                if (onBlur) onBlur()
+                                else setIsEditing(false)
+                            }} onChange={(e) => setValue(e.target.value)}
+                            onKeyUp={(e) => {
+                                if (e.key === 'Escape') inputRef.current?.blur()
+                            }} />
+                    </p>
                 </Button>
             </form>
         )
     } else {
         return (
-            <Button variant="ghost" className="w-full justify-start h-auto min-h-9" onClick={() => {
-                setIsEditing(true)
-            }} size="sm">
-                <p className={textClass}>
-                    {savedValue.length === 0 ? placeholder : savedValue}
-                </p>
-            </Button>
+            <div className="w-full">
+                <Button variant="ghost" className="w-full justify-start h-auto min-h-9" onClick={() => {
+                    setIsEditing(true)
+                }} size="sm">
+                    <p className={textClass}>
+                        {savedValue.length === 0 ? placeholder : savedValue}
+                    </p>
+                </Button>
+            </div>
         )
     }
 }
