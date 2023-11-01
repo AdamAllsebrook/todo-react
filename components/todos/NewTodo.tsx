@@ -5,7 +5,7 @@ import { Database } from "@/types/supabase"
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import Todo from "./Todo"
-import { AuthContext } from "./AuthProvider"
+import { AuthContext } from "@/components/auth/AuthProvider"
 
 export default function NewTodo({ callback }: { callback: () => void }) {
     const supabase = createClientComponentClient<Database>()

@@ -2,7 +2,7 @@
 
 import { Plus } from "lucide-react"
 import React, { useState } from "react"
-import { Button } from "./ui/button"
+import { Button } from "@/components/ui/button"
 import NewTodo from "./NewTodo"
 
 export default function AddTodo() {

@@ -2,7 +2,7 @@ import React from 'react';
 
 import ResetPasswordForm from '@/components/auth/ResetPasswordForm';
 import Nav from '@/components/Nav';
-import AuthLink from '@/components/AuthLink';
+import AuthLink from '@/components/auth/AuthLink';
 
 export default async function UpdatePasswordPage() {
 

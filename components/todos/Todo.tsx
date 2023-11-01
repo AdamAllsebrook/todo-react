@@ -1,8 +1,8 @@
 "use client"
 
 import React from "react"
-import { Checkbox } from "./ui/checkbox"
-import EditableText from "./EditableText"
+import { Checkbox } from "@/components/ui/checkbox"
+import EditableText from "@/components/EditableText"
 import {
     Card,
 } from "@/components/ui/card"

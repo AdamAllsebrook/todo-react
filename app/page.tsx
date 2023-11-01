@@ -1,9 +1,9 @@
-import AuthLink from '@/components/AuthLink'
+import AuthLink from '@/components/auth/AuthLink'
 import Nav from '@/components/Nav'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import TodosApp from '@/components/TodosApp';
+import TodosApp from '@/components/todos/TodosApp';
 
 export default async function Home() {
     const supabase = createServerComponentClient({ cookies });

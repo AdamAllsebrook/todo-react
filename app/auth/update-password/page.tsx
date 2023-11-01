@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 
 import UpdatePasswordForm from '@/components/auth/UpdatePasswordForm';
 import Nav from '@/components/Nav';
-import AuthLink from '@/components/AuthLink';
+import AuthLink from '@/components/auth/AuthLink';
 
 export default async function UpdatePasswordPage() {
     const supabase = createServerComponentClient({ cookies });

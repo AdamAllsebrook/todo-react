@@ -1,8 +1,8 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import UserDropdown from './UserDropdown';
-import SignInButton from './auth/SignInButton';
-import SignUpButton from './auth/SignUpButton';
+import SignInButton from './SignInButton';
+import SignUpButton from './SignUpButton';
 
 export default async function AuthLink() {
     const supabase = createServerComponentClient({ cookies });
