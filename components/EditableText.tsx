@@ -5,45 +5,41 @@ import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import { cn } from "@/lib/utils"
 
-export default function EditableText({ text }: { text: string }) {
+export default function EditableText({ text, textClass = "", onSubmit }: { text: string, textClass: string, onSubmit: (text: string) => void }) {
     const [isEditing, setIsEditing] = useState(false)
-    const [value, setValue] = useState("")
-    const [width, setWidth] = useState(0)
-    const span = useRef<HTMLSpanElement>(null)
-
-    useEffect(() => {
-        setWidth(span.current?.offsetWidth || 0)
-    }, [value])
+    const [value, setValue] = useState(text)
+    const [savedValue, setSavedValue] = useState(text)
+    const inputRef = useRef<HTMLInputElement>(null)
 
     if (isEditing) {
         return (
             <form onSubmit={(e) => {
                 e.preventDefault()
                 setIsEditing(false)
+                setSavedValue(value)
+                onSubmit(value)
             }}
             >
 
-                <Button variant="ghost" size="sm" className="focus-within:bg-gray-100">
-                    <h2 className="text-lg">
-                        <span className="absolute opacity-0" ref={span}>{value}</span>
-                        <input type="text" style={{ width }} className="bg-transparent border-none focus:outline-none"
-                            defaultValue={text} autoFocus={true} onBlur={() => {
-                                setValue("")
-                                setIsEditing(false)
-                            }} onChange={(e) => setValue(e.target.value)} />
-                    </h2>
+                <Button variant="ghost" size="sm" className="focus-within:bg-gray-100 h-auto min-h-9">
+                    <input type="text" ref={inputRef} className={cn("bg-transparent border-none focus:outline-none", textClass)}
+                        defaultValue={value} autoFocus={true} onBlur={() => {
+                            setIsEditing(false)
+                        }} onChange={(e) => setValue(e.target.value)}
+                        onKeyUp={(e) => {
+                            if (e.key === 'Escape') inputRef.current?.blur()
+                        }} />
                 </Button>
             </form>
         )
     } else {
         return (
-            <Button variant="ghost" onClick={() => {
+            <Button variant="ghost" className="w-full justify-start h-auto min-h-9" onClick={() => {
                 setIsEditing(true)
-                setValue(text)
             }} size="sm">
-                <h2 className="text-lg">
-                    {text}
-                </h2>
+                <p className={textClass}>
+                    {savedValue}
+                </p>
             </Button>
         )
     }

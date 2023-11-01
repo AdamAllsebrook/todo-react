@@ -31,7 +31,7 @@ export default function Todos() {
     return (
         <div>
             <h1 className="text-3xl font-semibold mb-4">My to-do list</h1>
-            <ul>
+            <ul className="space-y-4">
                 {!todos ? null : todos.map((todo) => (
                     <Todo key={todo.id} todo={todo} />
                 ))}
