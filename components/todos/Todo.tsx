@@ -31,7 +31,7 @@ export default function Todo(
         }) {
 
     return (
-        <Card className="w-[95vw] lg:w-[768px] flex p-4">
+        <Card className="w-full flex p-4">
             <Checkbox id={`check-${todo.id}`} className="my-2 mr-2"
                 checked={todo.completed} onClick={onCheck} />
             <label htmlFor={`check-${todo.id}`} className="hidden">{todo.title}</label>

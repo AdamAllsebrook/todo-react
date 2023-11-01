@@ -31,7 +31,7 @@ export default function Todos() {
     return (
         <div className="p-2">
             <h1 className="text-3xl my-12 lg:text-5xl font-semibold lg:my-24">My To-Do List</h1>
-            <div className="space-y-4 lg:mr-[20vw]">
+            <div className="space-y-4 lg:mr-[20vw] w-[95vw] lg:w-[768px]">
                 {!todos ? null : todos.map((todo) => (
                     <EditableTodo key={todo.id} todo={todo} />
                 ))}

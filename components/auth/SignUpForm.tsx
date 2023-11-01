@@ -77,7 +77,7 @@ export default function SignUpForm() {
         else {
             toast({
                 title: "Sign up successful!",
-                description: "Check your email for a link to verify your account."
+                description: "Welcome to Todos!"
             })
         }
     }
