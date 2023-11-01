@@ -30,27 +30,51 @@ export default function EditableTodo({ todo }: { todo: Database['public']['Table
         }
     })
 
+    const deleteTodo = async () => {
+        return supabase
+            .from('todos')
+            .delete()
+            .eq('id', todo.id)
+            .then(({ error }) => {
+                if (error) {
+                    console.log('error', error)
+                    throw new Error('Error deleting todo')
+                }
+            })
+    }
+
+    const { mutate: deleteMutate, isPending: deleteIsPending } = useMutation({
+        mutationFn: deleteTodo,
+        onSettled: () => {
+            return queryClient.invalidateQueries({ queryKey: ['todos'] })
+        }
+    })
+
     const [showCompleted, setShowCompleted] = useState(todo.completed)
     useEffect(() => {
         setShowCompleted((isPending ? variables.completed : todo.completed) as boolean)
     }, [todo.completed, isPending])
 
     return (
-        <Todo todo={{
-            id: todo.id,
-            title: todo.title,
-            description: todo.description ?? "",
-            completed: showCompleted,
-        }}
-            onCheck={() => {
-                mutate({ completed: !todo.completed })
+        deleteIsPending ? null :
+            <Todo todo={{
+                id: todo.id,
+                title: todo.title,
+                description: todo.description ?? "",
+                completed: showCompleted,
             }}
-            onTitle={(text) => {
-                mutate({ title: text })
-            }}
-            onDescription={(text) => {
-                mutate({ description: text })
-            }}
-        />
+                onCheck={() => {
+                    mutate({ completed: !todo.completed })
+                }}
+                onTitle={(text) => {
+                    mutate({ title: text })
+                }}
+                onDescription={(text) => {
+                    mutate({ description: text })
+                }}
+                onDelete={() => {
+                    deleteMutate()
+                }}
+            />
     )
 }

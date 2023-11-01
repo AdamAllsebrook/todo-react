@@ -54,6 +54,7 @@ export default function NewTodo({ callback }: { callback: () => void }) {
             onTitleBlur={callback}
             onDescription={() => {
             }}
+            showDelete={false}
         />
     )
 }
